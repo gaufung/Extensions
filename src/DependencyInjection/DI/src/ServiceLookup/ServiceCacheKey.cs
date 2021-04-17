@@ -5,6 +5,11 @@ using System;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 包含了两个属性
+    /// - Type（用来记录实现的 service 的类型）
+    /// - Slot (用来实现的序号，后实现的拥有最高的优先级）
+    /// </summary>
     internal struct ServiceCacheKey: IEquatable<ServiceCacheKey>
     {
         public static ServiceCacheKey Empty { get; } = new ServiceCacheKey(null, 0);

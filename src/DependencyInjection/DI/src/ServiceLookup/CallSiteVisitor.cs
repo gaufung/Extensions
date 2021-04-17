@@ -3,6 +3,11 @@ using System.Runtime.CompilerServices;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 用来生成对象的基类，主要关心两个方面的内容
+    /// - 要获取的服务的类型（Root, Scoped or Singleton)
+    /// - 服务是以什么形式提供的（对象，构造函数还是factory）
+    /// </summary>
     internal abstract class CallSiteVisitor<TArgument, TResult>
     {
         private readonly StackGuard _stackGuard;
@@ -19,6 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
                 return _stackGuard.RunOnEmptyStack((c, a) => VisitCallSite(c, a), callSite, argument);
             }
 
+            // 不同类型的 service 的创建
             switch (callSite.Cache.Location)
             {
                 case CallSiteResultCacheLocation.Root:
@@ -36,6 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 
         protected virtual TResult VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
         {
+            // 不同类型的服务 创建形式，提供者
             switch (callSite.Kind)
             {
                 case CallSiteKind.Factory:

@@ -11,11 +11,21 @@ using Microsoft.Extensions.Internal;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 主要核心类，通过 Populate 方法来完成都iServiceDescriptor 到生成类型的转变
+    /// </summary>
     internal class CallSiteFactory
     {
         private const int DefaultSlot = 0;
         private readonly List<ServiceDescriptor> _descriptors;
+        /// <summary>
+        /// cache, 每个服务类型对应的实现方式
+        /// </summary>
         private readonly ConcurrentDictionary<Type, ServiceCallSite> _callSiteCache = new ConcurrentDictionary<Type, ServiceCallSite>();
+        /// <summary>
+        /// key -> 服务类型
+        /// value -> 实现的 ServiceDescriptor 的集合
+        /// </summary>
         private readonly Dictionary<Type, ServiceDescriptorCacheItem> _descriptorLookup = new Dictionary<Type, ServiceDescriptorCacheItem>();
 
         private readonly StackGuard _stackGuard;
@@ -69,6 +79,12 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
             }
         }
 
+        /// <summary>
+        /// 创建 callsite, 在调用的时候，才会处理
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <param name="callSiteChain"></param>
+        /// <returns></returns>
         internal ServiceCallSite GetCallSite(Type serviceType, CallSiteChain callSiteChain)
         {
             return _callSiteCache.GetOrAdd(serviceType, type => CreateCallSite(type, callSiteChain));
@@ -85,6 +101,12 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
             return null;
         }
 
+        /// <summary>
+        /// 创建 callsite, 更具 ServiceDescriptior 的不同来创建
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <param name="callSiteChain"></param>
+        /// <returns></returns>
         private ServiceCallSite CreateCallSite(Type serviceType, CallSiteChain callSiteChain)
         {
             if (!_stackGuard.TryEnterOnCurrentStack())
@@ -107,6 +129,7 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
         {
             if (_descriptorLookup.TryGetValue(serviceType, out var descriptor))
             {
+                // 用最后一个的 descriptor 来创建对象
                 return TryCreateExact(descriptor.Last, serviceType, callSiteChain, DefaultSlot);
             }
 
@@ -257,6 +280,7 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 
                 ServiceCallSite[] parameterCallSites = null;
 
+                // 挑选最合适的构造函数
                 if (constructors.Length == 0)
                 {
                     throw new InvalidOperationException(Resources.FormatNoConstructorMatch(implementationType));
@@ -280,6 +304,7 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
                     return new ConstructorCallSite(lifetime, serviceType, constructor, parameterCallSites);
                 }
 
+                // reverse order
                 Array.Sort(constructors,
                     (a, b) => b.GetParameters().Length.CompareTo(a.GetParameters().Length));
 
@@ -345,6 +370,9 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
             }
         }
 
+        /// <summary>
+        /// 创建构造函数的 CallSite
+        /// </summary>
         private ServiceCallSite[] CreateArgumentCallSites(
             Type serviceType,
             Type implementationType,
@@ -358,6 +386,7 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
                 var parameterType = parameters[index].ParameterType;
                 var callSite = GetCallSite(parameterType, callSiteChain);
 
+                // 默认参数并没有很高的优先级
                 if (callSite == null && ParameterDefaultValue.TryGetDefaultValue(parameters[index], out var defaultValue))
                 {
                     callSite = new ConstantCallSite(parameterType, defaultValue);

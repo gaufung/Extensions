@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    ///  Runtime 实现类，用来解析服务
+    /// </summary>
     internal sealed class CallSiteRuntimeResolver : CallSiteVisitor<RuntimeResolverContext, object>
     {
         public object Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)

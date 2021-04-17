@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -9,6 +9,9 @@ using Microsoft.Extensions.Internal;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 使用一个字典，用来保存每个服务和它对应的实现类型，同时还记录实现类型的 order
+    /// </summary>
     internal class CallSiteChain
     {
         private readonly Dictionary<Type,ChainItemInfo> _callSiteChain;

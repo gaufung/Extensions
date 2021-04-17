@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 枚举类型的 CallSite
+    /// </summary>
     internal class IEnumerableCallSite : ServiceCallSite
     {
         internal Type ItemType { get; }

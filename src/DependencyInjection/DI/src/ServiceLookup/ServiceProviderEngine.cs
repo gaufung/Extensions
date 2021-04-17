@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// Engine 主要想干两件事情
+    /// 1. 能够获取 Root 的 IServiceProvider
+    /// 2. 能够获取当前的 IServiceProvider
+    /// </summary>
     internal abstract class ServiceProviderEngine : IServiceProviderEngine, IServiceScopeFactory
     {
         private readonly IServiceProviderEngineCallback _callback;
@@ -28,6 +33,11 @@ namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
             RealizedServices = new ConcurrentDictionary<Type, Func<ServiceProviderEngineScope, object>>();
         }
 
+        /// <summary>
+        /// 字典
+        /// Key -> 服务类型
+        /// value -> 委托，可以根据 spEngineScope 返回一个对象
+        /// </summary>
         internal ConcurrentDictionary<Type, Func<ServiceProviderEngineScope, object>> RealizedServices { get; }
 
         internal CallSiteFactory CallSiteFactory { get; }

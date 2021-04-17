@@ -6,6 +6,11 @@ using System.Diagnostics;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 同样包含两个属性
+    /// - LifeTime 对应于 Singlton, Scoped 和 Transient
+    /// - SeriviceCacheKey: 表明这是实现的这个服务的类型
+    /// </summary>
     internal struct ResultCache
     {
         public static ResultCache None { get; } = new ResultCache(CallSiteResultCacheLocation.None, ServiceCacheKey.Empty);

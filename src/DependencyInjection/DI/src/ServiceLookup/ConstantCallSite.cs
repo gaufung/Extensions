@@ -5,6 +5,9 @@ using System;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 就有一个 object 对象来表示服务
+    /// </summary>
     internal class ConstantCallSite : ServiceCallSite
     {
         internal object DefaultValue { get; }

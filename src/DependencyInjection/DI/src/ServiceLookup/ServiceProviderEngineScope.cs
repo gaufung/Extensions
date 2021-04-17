@@ -9,6 +9,11 @@ using Microsoft.Extensions.Internal;
 
 namespace Microsoft.Extensions.DependencyInjection.ServiceLookup
 {
+    /// <summary>
+    /// 实现了 IServiceScope 和 ISerivceProvider
+    /// - 创建一个 Scoped Serivce provider
+    /// - 获取 Service
+    /// </summary>
     internal class ServiceProviderEngineScope : IServiceScope, IServiceProvider, IAsyncDisposable
     {
         // For testing only

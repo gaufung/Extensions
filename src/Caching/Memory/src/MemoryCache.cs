@@ -20,6 +20,9 @@ namespace Microsoft.Extensions.Caching.Memory
     /// </summary>
     public class MemoryCache : IMemoryCache
     {
+        /// <summary>
+        /// 字典的 key 就是 CacheEntry 的 key
+        /// </summary>
         private readonly ConcurrentDictionary<object, CacheEntry> _entries;
         private long _cacheSize = 0;
         private bool _disposed;
@@ -61,7 +64,9 @@ namespace Microsoft.Extensions.Caching.Memory
             _logger = loggerFactory.CreateLogger<MemoryCache>();
 
             _entries = new ConcurrentDictionary<object, CacheEntry>();
+            // What to do when set an entry
             _setEntry = SetEntry;
+            // what to do when an entry is expired.
             _entryExpirationNotification = EntryExpired;
 
             if (_options.Clock == null)
@@ -107,6 +112,10 @@ namespace Microsoft.Extensions.Caching.Memory
             );
         }
 
+        /// <summary>
+        /// 当一个新的 CacheEntry 插入的时候，就会执行这个方法
+        /// </summary>
+        /// <param name="entry"></param>
         private void SetEntry(CacheEntry entry)
         {
             if (_disposed)
@@ -336,6 +345,7 @@ namespace Microsoft.Extensions.Caching.Memory
             }
 
             var newSize = 0L;
+            // 重复执行一百遍 ？？？
             for (var i = 0; i < 100; i++)
             {
                 var sizeRead = Interlocked.Read(ref _cacheSize);
@@ -430,6 +440,8 @@ namespace Microsoft.Extensions.Caching.Memory
                 }
             }
 
+            // 尝试从 low -> normal -> high 类型的 cacheentry 中删除，首先要做的是将他们
+            // 添加到 entriesToRemove 的集合中, 如果待删除的对象的大小满足要求，则退出
             ExpirePriorityBucket(ref removedSize, removalSizeTarget, computeEntrySize, entriesToRemove, lowPriEntries);
             ExpirePriorityBucket(ref removedSize, removalSizeTarget, computeEntrySize, entriesToRemove, normalPriEntries);
             ExpirePriorityBucket(ref removedSize, removalSizeTarget, computeEntrySize, entriesToRemove, highPriEntries);

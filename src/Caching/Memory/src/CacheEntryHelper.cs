@@ -8,6 +8,9 @@ namespace Microsoft.Extensions.Caching.Memory
 {
     internal class CacheEntryHelper
     {
+        /// <summary>
+        /// AsyncLocal 是一个对异步操作无效的的变量
+        /// </summary>
         private static readonly AsyncLocal<CacheEntryStack> _scopes = new AsyncLocal<CacheEntryStack>();
 
         internal static CacheEntryStack Scopes

@@ -13,7 +13,9 @@ namespace Microsoft.Extensions.Caching.Memory
     {
         private bool _disposed = false;
         private static readonly Action<object> ExpirationCallback = ExpirationTokensExpired;
+        // CacheEntry 过期时候的委托，一个具体实现可以查看 MemoryCache 的 EntryExpired 方法
         private readonly Action<CacheEntry> _notifyCacheOfExpiration;
+        // CacheEntry 插入时候的委托，一个具体i实现可以查看 MemoryCache 的 SetEntry 方法
         private readonly Action<CacheEntry> _notifyCacheEntryCommit;
         private IList<IDisposable> _expirationTokenRegistrations;
         private IList<PostEvictionCallbackRegistration> _postEvictionCallbacks;
@@ -211,6 +213,10 @@ namespace Microsoft.Extensions.Caching.Memory
             }
         }
 
+        // 三个条件
+        // 1. 手动设置 expired
+        // 2. 是否时间 expired
+        // 3. 是否 expired token 配置了超时
         internal bool CheckExpired(DateTimeOffset now)
         {
             return _isExpired || CheckForExpiredTime(now) || CheckForExpiredTokens();
@@ -261,6 +267,9 @@ namespace Microsoft.Extensions.Caching.Memory
             return false;
         }
 
+        /// <summary>
+        /// 长 ChangeToken 是时间注册到服务中去
+        /// </summary>
         internal void AttachTokens()
         {
             if (_expirationTokens != null)
@@ -295,6 +304,9 @@ namespace Microsoft.Extensions.Caching.Memory
             }, obj, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
 
+        /// <summary>
+        /// 将附属在这个 entrykey 上的 token 全部 dispose 掉，避免导致内存泄露
+        /// </summary>
         private void DetachTokens()
         {
             lock(_lock)

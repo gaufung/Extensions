@@ -1,10 +1,15 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
 
 namespace Microsoft.Extensions.Caching.Memory
 {
+    /// <summary>
+    /// CacheEntry Stack 是一个链表，每个元素包含了一个 CacheEntry 对象
+    /// 在调用 Push 方法的时候，就会生成一个新的 CacheEntryStack, 该方法的返回一个 CacheEntryStack， 而且 Previous 属性就是调用
+    /// 的 CacheEntryStack 对象
+    /// </summary>
     internal class CacheEntryStack
     {
         private readonly CacheEntryStack _previous;

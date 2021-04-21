@@ -9,6 +9,9 @@ namespace Microsoft.Extensions.Configuration.Memory
 {
     /// <summary>
     /// In-memory implementation of <see cref="IConfigurationProvider"/>
+    /// 假设我们的 dictionary 是这样的
+    ///  ["format:date"] = "yyyy-MM-dd"
+    ///  ["format:time"] = "hh-mm-ss"
     /// </summary>
     public class MemoryConfigurationProvider : ConfigurationProvider, IEnumerable<KeyValuePair<string, string>>
     {

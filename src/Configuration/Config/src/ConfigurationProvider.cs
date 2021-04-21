@@ -64,13 +64,17 @@ namespace Microsoft.Extensions.Configuration
         {
             var prefix = parentPath == null ? string.Empty : parentPath + ConfigurationPath.KeyDelimiter;
 
-            return Data
+            var paths =  Data
                 .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 .Select(kv => Segment(kv.Key, prefix.Length))
                 .Concat(earlierKeys)
                 .OrderBy(k => k, ConfigurationKeyComparer.Instance);
+            return paths;
         }
 
+        /// <summary>
+        ///  如果 key 是 foo:bar:baz, prefix 是 foo:, 那么 结果就是 bar
+        /// </summary>
         private static string Segment(string key, int prefixLength)
         {
             var indexOf = key.IndexOf(ConfigurationPath.KeyDelimiter, prefixLength, StringComparison.OrdinalIgnoreCase);

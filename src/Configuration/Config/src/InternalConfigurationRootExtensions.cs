@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.Configuration
         /// <returns>Immediate children sub-sections of section specified by key.</returns>
         internal static IEnumerable<IConfigurationSection> GetChildrenImplementation(this IConfigurationRoot root, string path)
         {
+            // 通过 aggregate 方法，可以不停的迭代 seed 的结果，获取所有 provider 中当前 path 的所有 child key
             return root.Providers
                 .Aggregate(Enumerable.Empty<string>(),
                     (seed, source) => source.GetChildKeys(seed, path))

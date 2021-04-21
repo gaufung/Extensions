@@ -779,5 +779,27 @@ namespace Microsoft.Extensions.Configuration.Test
             // Assert
             Assert.False(sectionExists);
         }
+
+        [Fact]
+        public void MemoryConfigurationTest1()
+        {
+            var dict = new Dictionary<string, string>()
+            {
+                {"format:date", "yyyy-MM-dd"},
+                {"format:time", "hh-mm-ss"}
+            };
+
+            var configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.AddInMemoryCollection(dict);
+            var config = configurationBuilder.Build();
+
+            var val = config["format:date"];
+            var section = config.GetSection("format");
+            string key = section.Key;
+            string value = section.Value;
+            string secionVal = section["date"];
+            var sections = section.GetChildren();
+            Assert.NotEqual(val, string.Empty);
+        }
     }
 }

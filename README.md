@@ -1,15 +1,17 @@
 .NET Extensions
 ===============
 
-[x] Caching
-[x] Dependency Injection
-[x] Configuraiton
-[ ] FileProvider
-[ ] Hosting
-[ ] HttpClientFactory
-[ ] Logging
-[ ] ObjectPool
-[ ] Options
+## RoadMap
+
+- [x] Caching
+- [x] Dependency Injection
+- [x] Configuraiton
+- [ ] FileProvider
+- [ ] Hosting
+- [ ] HttpClientFactory
+- [ ] Logging
+- [ ] ObjectPool
+- [ ] Options
 
 
 [![Build Status](https://dev.azure.com/dnceng/public/_apis/build/status/aspnet/Extensions/Extensions-ci)](https://dev.azure.com/dnceng/public/_build/latest?definitionId=23)

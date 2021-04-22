@@ -9,6 +9,15 @@ namespace Microsoft.Extensions.Configuration.Ini
 {
     /// <summary>
     /// An INI file based <see cref="StreamConfigurationProvider"/>.
+    /// It converts the ini file dictionary
+    ///
+    /// [foo]
+    /// bar=abc
+    /// baz="43"
+    ///
+    /// -->
+    /// {"foo:bar" : "abc"}
+    /// {"foo:baz" : "43" }
     /// </summary>
     public class IniStreamConfigurationProvider : StreamConfigurationProvider
     {

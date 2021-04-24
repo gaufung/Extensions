@@ -18,6 +18,7 @@ namespace Microsoft.Extensions.FileProviders.Physical
             {
                 return true;
             }
+            // FileSystemInfo 中有一个 Attribute 用来指示是否为系统文件， Hidden 文件
             else if (fileSystemInfo.Exists &&
                 (((fileSystemInfo.Attributes & FileAttributes.Hidden) != 0 && (filters & ExclusionFilters.Hidden) != 0) ||
                  ((fileSystemInfo.Attributes & FileAttributes.System) != 0 && (filters & ExclusionFilters.System) != 0)))

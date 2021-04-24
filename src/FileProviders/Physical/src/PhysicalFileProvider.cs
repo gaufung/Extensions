@@ -23,7 +23,7 @@ namespace Microsoft.Extensions.FileProviders
     {
         private const string PollingEnvironmentKey = "DOTNET_USE_POLLING_FILE_WATCHER";
         private static readonly char[] _pathSeparators = new[]
-            {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar};
+            {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar}; // { '\\', '/' }
 
         private readonly ExclusionFilters _filters;
 
@@ -69,6 +69,7 @@ namespace Microsoft.Extensions.FileProviders
         }
 
         /// <summary>
+        /// 系统自带的 FileSystemWather 并不高效，应当选择 PollingFileWather
         /// Gets or sets a value that determines if this instance of <see cref="PhysicalFileProvider"/>
         /// uses polling to determine file changes.
         /// <para>

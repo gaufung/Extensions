@@ -6,7 +6,7 @@
 - [x] Caching
 - [x] Dependency Injection
 - [x] Configuraiton
-- [ ] FileProvider
+- [x] FileProvider
 - [ ] Hosting
 - [ ] HttpClientFactory
 - [ ] Logging

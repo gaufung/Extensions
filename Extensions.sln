@@ -315,6 +315,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Hostin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Hosting.IntegrationTesting", "src\Hosting\IntegrationTesting\src\Microsoft.Extensions.Hosting.IntegrationTesting.csproj", "{60313ECC-7C20-4509-B41B-C0F69F5162E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7F602678-22BD-4DFE-9660-C1B6CD96BC56}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Shared\src\CommandLineUtils\Microsoft.Extensions.CommandLineUtils.Sources.projitems*{de47cb52-3e6f-4a6a-910e-ae118a00ce1a}*SharedItemsImports = 5

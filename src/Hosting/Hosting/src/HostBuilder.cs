@@ -124,10 +124,15 @@ namespace Microsoft.Extensions.Hosting
             }
             _hostBuilt = true;
 
+            //为 configurationBuilder 添加更多的 source
             BuildHostConfiguration();
+            // 创建 Hosing Environment 对象
             CreateHostingEnvironment();
+            // 创建 HostBuilderContext 对象
             CreateHostBuilderContext();
+            // 根据之前的 HostBuilderContext 中的 IConfiguraion 对象，继续构建，因为还有 Action<HostBuilderContext, IConfigurationBuilder> 没有处理。在构建好 IConfiguration 对象后，继续赋值给 HostBuilderContext 对象
             BuildAppConfiguration();
+            // 创建 Service provider， 并且最终一个 _appService 对象返回回来。
             CreateServiceProvider();
 
             return _appServices.GetRequiredService<IHost>();

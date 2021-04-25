@@ -44,6 +44,7 @@ namespace Microsoft.Extensions.Hosting.Internal
             combinedCancellationToken.ThrowIfCancellationRequested();
             _hostedServices = Services.GetService<IEnumerable<IHostedService>>();
 
+            // start the service one by one.
             foreach (var hostedService in _hostedServices)
             {
                 // Fire IHostedService.Start

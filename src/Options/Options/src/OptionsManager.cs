@@ -7,6 +7,8 @@ namespace Microsoft.Extensions.Options
     /// Implementation of <see cref="IOptions{TOptions}"/> and <see cref="IOptionsSnapshot{TOptions}"/>.
     /// </summary>
     /// <typeparam name="TOptions">Options type.</typeparam>
+    /// 通过 IOptionFactory 来创建 Option
+    /// 通过 OptionCache 来缓存 Option
     public class OptionsManager<TOptions> : IOptions<TOptions>, IOptionsSnapshot<TOptions> where TOptions : class, new()
     {
         private readonly IOptionsFactory<TOptions> _factory;

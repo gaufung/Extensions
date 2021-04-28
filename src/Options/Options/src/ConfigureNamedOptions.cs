@@ -45,6 +45,7 @@ namespace Microsoft.Extensions.Options
             }
 
             // Null name is used to configure all named options.
+            // 如果为 name, 那么所有 Action 都会被执行
             if (Name == null || name == Name)
             {
                 Action?.Invoke(options);

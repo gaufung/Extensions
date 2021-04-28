@@ -11,6 +11,9 @@ namespace Microsoft.Extensions.Options
     /// <typeparam name="TOptions">The type of options being requested.</typeparam>
     public class OptionsFactory<TOptions> : IOptionsFactory<TOptions> where TOptions : class, new()
     {
+        // OptionFactory 将创建的主动权交给下面两类
+        // 1. IConfigureOptions
+        // 2. IPostConfigurationOptions
         private readonly IEnumerable<IConfigureOptions<TOptions>> _setups;
         private readonly IEnumerable<IPostConfigureOptions<TOptions>> _postConfigures;
         private readonly IEnumerable<IValidateOptions<TOptions>> _validations;

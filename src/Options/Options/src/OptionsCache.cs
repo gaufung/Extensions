@@ -10,6 +10,7 @@ namespace Microsoft.Extensions.Options
     /// Used to cache <typeparamref name="TOptions"/> instances.
     /// </summary>
     /// <typeparam name="TOptions">The type of options being requested.</typeparam>
+    /// OptionCache 就是一个用 ConcurrentDictionary 封装的一个字典
     public class OptionsCache<TOptions> : IOptionsMonitorCache<TOptions> where TOptions : class
     {
         private readonly ConcurrentDictionary<string, Lazy<TOptions>> _cache = new ConcurrentDictionary<string, Lazy<TOptions>>(StringComparer.Ordinal);

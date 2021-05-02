@@ -12,11 +12,14 @@ namespace Microsoft.Extensions.Logging
     /// <summary>
     /// Produces instances of <see cref="ILogger"/> classes based on the given providers.
     /// </summary>
+    /// 用 LoggerFactory 来包含 LogProvider 并且创建 ILoger 对象
     public class LoggerFactory : ILoggerFactory
     {
         private static readonly LoggerRuleSelector RuleSelector = new LoggerRuleSelector();
-
+        // Logger 对象，其中 key 为 Categroy 的名字，Value 是已经根据 Provider 创建好的 Logger
         private readonly Dictionary<string, Logger> _loggers = new Dictionary<string, Logger>(StringComparer.Ordinal);
+
+        // 注册的 LogProvider
         private readonly List<ProviderRegistration> _providerRegistrations = new List<ProviderRegistration>();
         private readonly object _sync = new object();
         private volatile bool _disposed;
@@ -57,6 +60,7 @@ namespace Microsoft.Extensions.Logging
         {
             foreach (var provider in providers)
             {
+                // 往 _providerRegistrations （list) 中添加 provider
                 AddProviderRegistration(provider, dispose: false);
             }
 
@@ -109,6 +113,7 @@ namespace Microsoft.Extensions.Logging
                 {
                     logger = new Logger
                     {
+                        // 根据 _providerRegisteration 创建一个，LoggerInformation 数组
                         Loggers = CreateLoggers(categoryName),
                     };
 

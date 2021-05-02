@@ -6,10 +6,18 @@ using System.Collections.Generic;
 
 namespace Microsoft.Extensions.Logging
 {
+    /// <summary>
+    /// 这个类主要有个三个数据，分别记录了 LogProvider 创建的 Log 对象
+    /// </summary>
     internal class Logger : ILogger
     {
+        // Raw logger, 是直接调用 ILogProvider 的 Create 方法创建的 ILogger 对象
         public LoggerInformation[] Loggers { get; set; }
+
+        // 包含了 LogLevel 的定义的 logger,用来判断是否 enable
         public MessageLogger[] MessageLoggers { get; set; }
+
+        // Scoped logger
         public ScopeLogger[] ScopeLoggers { get; set; }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)

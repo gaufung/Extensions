@@ -9,7 +9,7 @@
 - [x] FileProvider
 - [x] Hosting
 - [ ] HttpClientFactory
-- [ ] Logging
+- [x] Logging
 - [ ] ObjectPool
 - [x] Options
 - [ ] Primitives

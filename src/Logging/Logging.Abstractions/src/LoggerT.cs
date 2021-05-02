@@ -11,6 +11,8 @@ namespace Microsoft.Extensions.Logging
     /// provided <see cref="ILoggerFactory"/>.
     /// </summary>
     /// <typeparam name="T">The type.</typeparam>
+    /// 包含了一个 ILogger 接口，该接口大部分操作
+    /// 它是有一个 ILoggerFactory 创建的
     public class Logger<T> : ILogger<T>
     {
         private readonly ILogger _logger;

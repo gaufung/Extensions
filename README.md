@@ -8,7 +8,7 @@
 - [x] Configuraiton
 - [x] FileProvider
 - [x] Hosting
-- [ ] HttpClientFactory
+- [x] HttpClientFactory
 - [x] Logging
 - [ ] ObjectPool
 - [x] Options

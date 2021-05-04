@@ -15,6 +15,13 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Http
 {
+    /// <summary>
+    /// 该类是 HttpClientFactory 的一个默认实现， 在创建 HttpClient 的时候，缓存了同一个名字的
+    /// HttpMessageHandler 的实现。
+    /// 每个 HttpMessageHandler 都被一个 ActiveHandlerTackingEntry 封装，然后又一个 Timer 定期将他们呢
+    /// 放入到一个 队列中，然后同一释放。 
+    /// HttpMessageHandler 主要是由一个 HttpMessageHandlerBuilder 来创建
+    /// </summary>
     internal class DefaultHttpClientFactory : IHttpClientFactory, IHttpMessageHandlerFactory
     {
         private static readonly TimerCallback _cleanupCallback = (s) => ((DefaultHttpClientFactory)s).CleanupTimer_Tick();

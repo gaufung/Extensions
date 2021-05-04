@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -11,6 +11,8 @@ namespace Microsoft.Extensions.Http
 {
     // Thread-safety: We treat this class as immutable except for the timer. Creating a new object
     // for the 'expiry' pool simplifies the threading requirements significantly.
+    // 这个类封装了 HttpMessageHandler, 主要是增加了一个 Timer， 在时间到达之后，调用 dispose 方法来
+    // 释放这个 HttoMessageHandler
     internal class ActiveHandlerTrackingEntry
     {
         private static readonly TimerCallback _timerCallback = (s) => ((ActiveHandlerTrackingEntry)s).Timer_Tick();

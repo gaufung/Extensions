@@ -10,7 +10,7 @@
 - [x] Hosting
 - [x] HttpClientFactory
 - [x] Logging
-- [ ] ObjectPool
+- [x] ObjectPool
 - [x] Options
 - [x] Primitives
 
